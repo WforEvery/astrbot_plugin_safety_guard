@@ -1,0 +1,12 @@
+name: astrbot_plugin_safety_guard
+display_name: AstrBot 安全护栏
+description: 双向对话安全护栏插件，拦截过度恋爱化/依赖化/冒充真人/未成年人高风险/敏感越界等内容，并提供身份提醒、停止退出和时长提醒。
+version: 0.1.0
+author: Sisyphus
+repo: local
+entry: main
+astrbot_version: ">=3.4.0"
+support_platforms:
+  - aiocqhttp
+  - qq
+  - telegram

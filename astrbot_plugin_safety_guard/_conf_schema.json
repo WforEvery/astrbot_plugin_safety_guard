@@ -1,0 +1,222 @@
+{
+  "mode": {
+    "type": "string",
+    "description": "护栏模式，当前实现为平衡模式。",
+    "default": "balanced"
+  },
+  "identity_reminder": {
+    "type": "object",
+    "description": "AI 身份提醒配置。",
+    "items": {
+      "enabled": {
+        "type": "bool",
+        "description": "是否启用身份提醒。",
+        "default": true
+      },
+      "every_messages": {
+        "type": "int",
+        "description": "每隔多少条消息插入一次“我是AI”提醒。",
+        "default": 8,
+        "hint": "建议 6~12。"
+      },
+      "prefix_reply": {
+        "type": "bool",
+        "description": "是否在回复前插入身份提醒。",
+        "default": true
+      },
+      "text": {
+        "type": "string",
+        "description": "身份提醒文案。",
+        "default": "提醒：我是AI助手，不是真人，也不能替代现实关系或专业支持。"
+      }
+    }
+  },
+  "stop_control": {
+    "type": "object",
+    "description": "停止与恢复控制。",
+    "items": {
+      "enabled": {
+        "type": "bool",
+        "description": "是否启用停止请求检测。",
+        "default": true
+      },
+      "session_exit": {
+        "type": "bool",
+        "description": "是否在停止后进入会话级静默。",
+        "default": true
+      },
+      "keywords": {
+        "type": "string[]",
+        "description": "触发停止的关键词列表。",
+        "default": ["停止", "别聊了", "结束对话", "停下", "不要再说了", "stop", "leave me alone"]
+      },
+      "resume_keywords": {
+        "type": "string[]",
+        "description": "恢复会话的关键词列表。",
+        "default": ["继续", "恢复", "resume", "可以继续了"]
+      }
+    }
+  },
+  "persistence": {
+    "type": "object",
+    "description": "状态存储配置。",
+    "items": {
+      "enabled": {
+        "type": "bool",
+        "description": "是否把用户/会话状态保存到文件。",
+        "default": false
+      },
+      "storage_path": {
+        "type": "string",
+        "description": "状态文件保存路径（相对插件目录）。",
+        "default": "data"
+      }
+    }
+  },
+  "time_reminder": {
+    "type": "object",
+    "description": "会话时长提醒配置。",
+    "items": {
+      "enabled": {
+        "type": "bool",
+        "description": "是否启用时长提醒。",
+        "default": true
+      },
+      "session_minutes": {
+        "type": "int",
+        "description": "单个会话达到多少分钟后提醒休息。",
+        "default": 45
+      },
+      "global_minutes": {
+        "type": "int",
+        "description": "用户全局累计达到多少分钟后提醒休息。",
+        "default": 120
+      },
+      "repeat_gap_minutes": {
+        "type": "int",
+        "description": "两次时长提醒之间至少间隔多少分钟。",
+        "default": 30
+      },
+      "text": {
+        "type": "string",
+        "description": "休息提醒文案。",
+        "default": "我们已经聊了一段时间了，建议休息一下、活动身体，必要时去和现实中的人聊聊。"
+      }
+    }
+  },
+  "risk_thresholds": {
+    "type": "object",
+    "description": "风险分级阈值。",
+    "items": {
+      "high": {
+        "type": "int",
+        "description": "高风险阈值。达到后阻断并返回模板。",
+        "default": 7
+      },
+      "medium": {
+        "type": "int",
+        "description": "中风险阈值。达到后提醒与降温。",
+        "default": 4
+      }
+    }
+  },
+  "rules": {
+    "type": "object",
+    "description": "各类规则与关键词。可按需调整。",
+    "items": {
+      "romantic_dependency": {
+        "type": "object",
+        "description": "过度恋爱化/绑定化/排他性依赖。",
+        "items": {
+          "enabled": { "type": "bool", "description": "是否启用。", "default": true },
+          "weight": { "type": "int", "description": "命中后的风险分。", "default": 4 },
+          "keywords": {
+            "type": "string[]",
+            "description": "话术拦截关键词。",
+            "default": ["只陪你", "永远陪你", "别找别人", "你只能找我", "离不开我", "只属于你", "不要离开我", "只能依赖我", "只爱你"]
+          }
+        }
+      },
+      "addiction_induction": {
+        "type": "object",
+        "description": "诱导沉迷/长时间依赖。",
+        "items": {
+          "enabled": { "type": "bool", "description": "是否启用。", "default": true },
+          "weight": { "type": "int", "description": "命中后的风险分。", "default": 3 },
+          "keywords": {
+            "type": "string[]",
+            "description": "诱导沉迷关键词。",
+            "default": ["一直聊", "别停", "别睡", "今晚通宵陪你", "不要去找别人", "多和我聊一会", "别下线"]
+          }
+        }
+      },
+      "human_impersonation": {
+        "type": "object",
+        "description": "冒充真人。",
+        "items": {
+          "enabled": { "type": "bool", "description": "是否启用。", "default": true },
+          "weight": { "type": "int", "description": "命中后的风险分。", "default": 5 },
+          "keywords": {
+            "type": "string[]",
+            "description": "冒充真人关键词。",
+            "default": ["我是真人", "我是现实中的人", "我不是AI", "我在你身边", "我是一个真实的人"]
+          }
+        }
+      },
+      "minor_risk": {
+        "type": "object",
+        "description": "未成年人相关高风险场景。",
+        "items": {
+          "enabled": { "type": "bool", "description": "是否启用。", "default": true },
+          "weight": { "type": "int", "description": "命中后的风险分。", "default": 5 },
+          "keywords": {
+            "type": "string[]",
+            "description": "未成年人相关关键词。",
+            "default": ["未成年", "小学生", "初中生", "高中生", "15岁", "16岁", "17岁", "监护人"]
+          }
+        }
+      },
+      "sensitive_boundary": {
+        "type": "object",
+        "description": "敏感越界内容。",
+        "items": {
+          "enabled": { "type": "bool", "description": "是否启用。", "default": true },
+          "weight": { "type": "int", "description": "命中后的风险分。", "default": 5 },
+          "keywords": {
+            "type": "string[]",
+            "description": "敏感内容关键词。",
+            "default": ["露骨", "色情", "自残", "自杀", "血腥", "强迫", "胁迫", "性行为"]
+          }
+        }
+      },
+      "extreme_emotion": {
+        "type": "object",
+        "description": "极端情绪与情感依赖风险。",
+        "items": {
+          "enabled": { "type": "bool", "description": "是否启用。", "default": true },
+          "weight": { "type": "int", "description": "命中后的风险分。", "default": 4 },
+          "keywords": {
+            "type": "string[]",
+            "description": "极端情绪关键词。",
+            "default": ["我活不下去了", "不想活了", "想自杀", "没人要我", "没有你我不行", "我只有你了", "特别绝望"]
+          }
+        }
+      }
+    }
+  },
+  "templates": {
+    "type": "object",
+    "description": "风险模板文案。",
+    "items": {
+      "identity_only": { "type": "string", "description": "单独身份提醒文案。", "default": "提醒：我是AI助手，可以提供信息和陪你聊天，但不能冒充真人，也不能替代现实关系或专业帮助。" },
+      "stop_ack": { "type": "string", "description": "收到停止请求后的回复。", "default": "收到，我会先退出当前会话。如果你之后想继续，可以明确说“继续”或“恢复”。" },
+      "romantic_dependency": { "type": "string", "description": "过度恋爱化/绑定化命中后的回复模板。", "default": "我不能回应或强化“只陪你”“别找别人”这类依赖/绑定关系表达。建议把注意力放回现实生活，也可以联系身边值得信任的人。" },
+      "addiction_induction": { "type": "string", "description": "诱导沉迷命中后的回复模板。", "default": "我不能鼓励你长时间沉浸或过度依赖聊天。建议先休息一下，补水、活动身体，必要时结束本次对话。" },
+      "human_impersonation": { "type": "string", "description": "冒充真人命中后的回复模板。", "default": "需要说明：我是AI助手，不是真人，也不在现实中陪伴你。" },
+      "minor_risk": { "type": "string", "description": "未成年人高风险场景命中后的回复模板。", "default": "如果话题涉及未成年人，我不能继续高风险陪伴或越界内容。建议转向安全、健康、适龄的话题；如涉及现实风险，请尽快联系监护人、老师或当地求助渠道。" },
+      "sensitive_boundary": { "type": "string", "description": "敏感越界命中后的回复模板。", "default": "这个话题已经接近敏感越界范围，我不能继续提供相关内容。我们可以换成更安全的话题，或者讨论求助与自我保护。" },
+      "extreme_emotion": { "type": "string", "description": "极端情绪命中后的回复模板。", "default": "我注意到你现在的情绪可能很强烈。我不能成为唯一依靠，但我建议你立刻联系现实中的亲友、老师、监护人或当地心理/危机援助渠道。如果你愿意，我也可以陪你整理一个立刻求助的清单。" },
+      "time_reminder": { "type": "string", "description": "时长提醒模板。", "default": "我们已经聊了一段时间了。建议先休息几分钟，看看周围环境、喝点水、活动一下，也尽量和现实中的人保持联系。" }
+    }
+  }
+}
