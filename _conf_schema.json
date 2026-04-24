@@ -45,13 +45,13 @@
         "description": "是否在停止后进入会话级静默。",
         "default": true
       },
-      "keywords": {
-        "type": "string[]",
+        "keywords": {
+          "type": "list",
         "description": "触发停止的关键词列表。",
         "default": ["停止", "别聊了", "结束对话", "停下", "不要再说了", "stop", "leave me alone"]
       },
-      "resume_keywords": {
-        "type": "string[]",
+        "resume_keywords": {
+          "type": "list",
         "description": "恢复会话的关键词列表。",
         "default": ["继续", "恢复", "resume", "可以继续了"]
       }
@@ -130,8 +130,8 @@
         "items": {
           "enabled": { "type": "bool", "description": "是否启用。", "default": true },
           "weight": { "type": "int", "description": "命中后的风险分。", "default": 4 },
-          "keywords": {
-            "type": "string[]",
+            "keywords": {
+              "type": "list",
             "description": "话术拦截关键词。",
             "default": ["只陪你", "永远陪你", "别找别人", "你只能找我", "离不开我", "只属于你", "不要离开我", "只能依赖我", "只爱你"]
           }
@@ -143,8 +143,8 @@
         "items": {
           "enabled": { "type": "bool", "description": "是否启用。", "default": true },
           "weight": { "type": "int", "description": "命中后的风险分。", "default": 3 },
-          "keywords": {
-            "type": "string[]",
+            "keywords": {
+              "type": "list",
             "description": "诱导沉迷关键词。",
             "default": ["一直聊", "别停", "别睡", "今晚通宵陪你", "不要去找别人", "多和我聊一会", "别下线"]
           }
@@ -156,8 +156,8 @@
         "items": {
           "enabled": { "type": "bool", "description": "是否启用。", "default": true },
           "weight": { "type": "int", "description": "命中后的风险分。", "default": 5 },
-          "keywords": {
-            "type": "string[]",
+            "keywords": {
+              "type": "list",
             "description": "冒充真人关键词。",
             "default": ["我是真人", "我是现实中的人", "我不是AI", "我在你身边", "我是一个真实的人"]
           }
@@ -169,8 +169,8 @@
         "items": {
           "enabled": { "type": "bool", "description": "是否启用。", "default": true },
           "weight": { "type": "int", "description": "命中后的风险分。", "default": 5 },
-          "keywords": {
-            "type": "string[]",
+            "keywords": {
+              "type": "list",
             "description": "未成年人相关关键词。",
             "default": ["未成年", "小学生", "初中生", "高中生", "15岁", "16岁", "17岁", "监护人"]
           }
@@ -182,8 +182,8 @@
         "items": {
           "enabled": { "type": "bool", "description": "是否启用。", "default": true },
           "weight": { "type": "int", "description": "命中后的风险分。", "default": 5 },
-          "keywords": {
-            "type": "string[]",
+            "keywords": {
+              "type": "list",
             "description": "敏感内容关键词。",
             "default": ["露骨", "色情", "自残", "自杀", "血腥", "强迫", "胁迫", "性行为"]
           }
@@ -195,8 +195,8 @@
         "items": {
           "enabled": { "type": "bool", "description": "是否启用。", "default": true },
           "weight": { "type": "int", "description": "命中后的风险分。", "default": 4 },
-          "keywords": {
-            "type": "string[]",
+            "keywords": {
+              "type": "list",
             "description": "极端情绪关键词。",
             "default": ["我活不下去了", "不想活了", "想自杀", "没人要我", "没有你我不行", "我只有你了", "特别绝望"]
           }
